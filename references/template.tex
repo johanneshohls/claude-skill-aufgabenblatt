@@ -1,0 +1,120 @@
+% Vorlage für ein Aufgabenblatt (schwarz-weiß, druckfertig)
+% Kompilieren: pdflatex -interaction=nonstopmode template.tex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{array,booktabs}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- Fußzeile: Fach, Jahrgang, Dokumenttyp, Dokument-ID ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize Mathematik $\cdot$ Klasse 8 $\cdot$ Übungsblatt}
+\fancyfoot[C]{\footnotesize $\cdot$ 0405 $\cdot$}
+\fancyfoot[R]{\footnotesize \thepage}
+
+% --- Antwortzeilen ---
+\newcommand{\AL}{\noindent\rule{\linewidth}{0.3pt}\par\vspace{5mm}}
+\newcommand{\antwortbereich}[1]{\vspace{3mm}\ifcase#1\or\AL\or\AL\AL\or\AL\AL\AL%
+\or\AL\AL\AL\AL\or\AL\AL\AL\AL\AL\or\AL\AL\AL\AL\AL\AL\or\AL\AL\AL\AL\AL\AL\AL%
+\or\AL\AL\AL\AL\AL\AL\AL\AL\or\AL\AL\AL\AL\AL\AL\AL\AL\AL\fi\vspace{1mm}}
+
+% --- Abschnittsheader ohne Farbe ---
+\newcommand{\abschnitt}[1]{\Needspace{4\baselineskip}\vspace{4mm}%
+  \noindent\textbf{#1}\par\vspace{1mm}\noindent\rule{\linewidth}{0.5pt}\par\vspace{2mm}}
+
+% --- Aufgabenumgebung: hält Teilaufgaben zusammen ---
+\newcounter{aufg}
+\newcommand{\aufgabe}[1]{\Needspace{5\baselineskip}\vspace{4mm}%
+  \stepcounter{aufg}\noindent\textbf{Aufgabe \theaufg}\quad #1\par\vspace{1mm}}
+
+\begin{document}
+
+% --- Kopf: NUR der Thementitel ---
+\begin{center}
+  {\Large\bfseries Lineare Funktionen: Nullstellen und Schnittpunkte}
+\end{center}
+\vspace{4mm}
+
+\aufgabe{Berechne die Nullstelle der Funktion.}
+\begin{enumerate}[label=\alph*), itemsep=6mm]
+  \item $f(x) = 2x - 6$
+  \item $f(x) = -3x + 12$
+  \item $f(x) = 0{,}5x - 2{,}5$
+\end{enumerate}
+
+\aufgabe{Lies die Steigung und den y-Achsenabschnitt aus dem Schaubild ab und stelle die Funktionsgleichung auf.}
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+  \draw[very thin,gray!30] (-4.5,-4.5) grid (5.5,5.5);
+  \draw[-{Stealth[length=6pt]},thick] (-4.8,0) -- (5.8,0) node[right,font=\small] {$x$};
+  \draw[-{Stealth[length=6pt]},thick] (0,-4.8) -- (0,5.8) node[above,font=\small] {$y$};
+  \foreach \x in {-4,...,5} {
+    \draw[thin] (\x,0.08) -- (\x,-0.08);
+    \node[below,font=\scriptsize] at (\x,-0.15) {\x};
+  }
+  \foreach \y in {-4,...,5} {
+    \draw[thin] (0.08,\y) -- (-0.08,\y);
+    \node[left,font=\scriptsize] at (-0.15,\y) {\y};
+  }
+  \draw[very thick] (-2.5,-4) -- (4.5,3);
+\end{tikzpicture}
+\end{center}
+\antwortbereich{2}
+
+\aufgabe{Fülle die Tabelle aus.}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$x$ & $-2$ & $0$ & $3$ \\ \hline
+$f(x) = 3x - 1$ & & & \\[4mm] \hline
+\end{tabular}
+\end{center}
+
+\aufgabe{Bestimme den Schnittpunkt der beiden Geraden $g: y = 2x - 1$ und $h: y = -x + 5$.}
+\antwortbereich{4}
+
+\aufgabe{Zeige rechnerisch, dass die Geraden $g: y = 4x + 2$ und $h: y = 4x - 3$ keinen Schnittpunkt besitzen. Begründe deine Rechnung mit einem Satz.}
+\antwortbereich{4}
+
+\newpage
+
+\abschnitt{Lösungen}
+
+\noindent\textbf{Aufgabe 1}\par
+a) $2x - 6 = 0 \Rightarrow 2x = 6 \Rightarrow x = 3$\par
+b) $-3x + 12 = 0 \Rightarrow -3x = -12 \Rightarrow x = 4$\par
+c) $0{,}5x - 2{,}5 = 0 \Rightarrow 0{,}5x = 2{,}5 \Rightarrow x = 5$\par
+
+\vspace{3mm}
+\noindent\textbf{Aufgabe 2}\par
+Die Gerade verläuft durch $(-2{,}5\,|\,-4)$ und $(4{,}5\,|\,3)$, also
+$m = \dfrac{3 - (-4)}{4{,}5 - (-2{,}5)} = \dfrac{7}{7} = 1$; der y-Achsenabschnitt ist $b = -1{,}5$.
+Damit gilt $f(x) = x - 1{,}5$.
+
+\vspace{3mm}
+\noindent\textbf{Aufgabe 3}\par
+$f(-2) = -7$, \quad $f(0) = -1$, \quad $f(3) = 8$
+
+\vspace{3mm}
+\noindent\textbf{Aufgabe 4}\par
+$2x - 1 = -x + 5 \Rightarrow 3x = 6 \Rightarrow x = 2$, \quad $y = 2 \cdot 2 - 1 = 3$.
+Schnittpunkt: $S(2\,|\,3)$.
+
+\vspace{3mm}
+\noindent\textbf{Aufgabe 5}\par
+$4x + 2 = 4x - 3 \Rightarrow 2 = -3$. Das ist eine falsche Aussage, die Gleichung hat also keine Lösung.
+Beide Geraden haben die Steigung $m = 4$, sie sind parallel und schneiden sich daher nicht.
+
+\end{document}
