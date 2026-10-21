@@ -80,13 +80,13 @@ Jede Aufgabe beginnt mit einem Imperativ. Fragen sind verboten — auch verkleid
 
 ### 3. Lösungsblatt
 
-**Immer enthalten** (mindestens im Skill-Output dokumentiert, praktisch dann vom Lehrer separat gedruckt)
+**Immer enthalten, als eigene Datei** - nie im AB-PDF. Die Lösung erreichen die Schüler nur über den QR-Code oben rechts auf dem AB, und der führt zum selbrTutor, nicht in die Dropbox (siehe Schritt 4 im technischen Workflow).
 
 - **Vollständige Lösungswege** für alle 8–12 Aufgaben
 - Schrittweise Rechnung mit **Zwischenschritten**
 - Ggf. **Skizzen/Diagramme** in den Lösungen (z.B. freier Fall-Diagramm)
 - **Kurze Erklärungssätze** nur wo nötig (z.B. "Wir wählen die Hubarbeit-Formel, weil…")
-- Auf separater Seite oder klar gekennzeichnet
+- Eigene Datei: `<Einheit>/Lösungen/[EE][NN] [Name] - Lösung.pdf`, Quelle in `Lösungen/_Quellen/`
 
 ---
 
@@ -262,9 +262,20 @@ Fehlersuche: `.log`-Datei prüfen, Zeile mit `!` suchen.
 rm dateiname.aux dateiname.log
 ```
 
-### 4. Qualitätsprüfung
+### 4. QR-Code zum selbrTutor
 
-PDF öffnen und prüfen: Formeln korrekt? Tabellen vollständig? Koordinatensystem sauber? Keine Textabschneidungen?
+Jedes AB bekommt oben rechts einen QR-Code mit der Beschriftung "Hilfe & Lösung". Er führt zu `https://selbr.app/blatt/<klasse>-<nr>`: dort wählt das Kind eine Aufgabe, holt sich einen Einstieg oder lässt eine fotografierte Rechnung prüfen, und als letzte Stufe öffnet es die Lösung. **Kein QR-Code führt direkt in die Dropbox.**
+
+1. Tutor-Entwurf schreiben (JSON, ins Scratchpad): `titel`, `hinweis` (zwei bis drei Sätze an das Kind, ohne Lösung) und `aufgaben` mit je `nr` (wie auf dem Blatt), `titel` (zwei bis vier Wörter), `text` (Aufgabe vollständig, Formeln in `$...$`, Teilaufgaben je Zeile mit `\n`, Tabellen zeilenweise) und `loesung` (reiner Text ohne `$`, Teilaufgaben a), b) ... hintereinander). Vorbild: `~/Projekte/selbr/public/blaetter/8-0146.json`.
+2. Aufrufen:
+   ```bash
+   ~/scripte/ab-tutor.py --blatt <entwurf.json> ".../Arbeitsblätter/_Quellen/[EE][NN] AB [Name].tex"
+   ```
+   Das Skript teilt die Lösung, legt das Blatt in selbr an und pusht es, rendert den QR, baut `\tutorqr` ins TeX, kompiliert zweimal, legt die PDF nach `Arbeitsblätter/` und prüft den Code mit `ab-share.sh verify`. Erst bei "Fertig: https://selbr.app/blatt/..." ist das AB druckbar.
+
+### 5. Qualitätsprüfung
+
+PDF öffnen und prüfen: Formeln korrekt? Tabellen vollständig? Koordinatensystem sauber? Keine Textabschneidungen? QR oben rechts mit "Hilfe & Lösung"?
 
 ---
 
@@ -272,7 +283,7 @@ PDF öffnen und prüfen: Formeln korrekt? Tabellen vollständig? Koordinatensyst
 
 1. **Für Lehrer**:
    - Das Aufgabenblatt ist **sofort druckbar** (schwarz/weiß, schülernah)
-   - Lösungsblatt ist integriert → getrennt ausdrucken vor Ausgabe
+   - Lösung liegt als eigene Datei vor und wird nicht ausgeteilt - die Schüler kommen über den QR-Code im selbrTutor an sie heran
    - Zeitrahmen: Je nach Klassenstufe und Aufgabentyp 30–60 Min.
 
 2. **Kontextwahl**:
@@ -315,6 +326,7 @@ PDF öffnen und prüfen: Formeln korrekt? Tabellen vollständig? Koordinatensyst
 - [ ] **AFB-Progression schnell genug** — nicht mehr als 2–3 Unteraufgaben auf gleichem Niveau, bevor AFB steigt?
 - [ ] **PFLICHT: Jeder Aufgabentext beginnt mit Imperativ — kein einziges Fragezeichen, kein W-Wort am Satzanfang?**
 - [ ] Lösungsblatt vollständig mit Zwischenschritten?
+- [ ] `ab-tutor.py` mit "Fertig" durchgelaufen, QR führt zu selbr?
 - [ ] LaTeX fehlerfrei kompiliert (kein `!` im Log)?
 - [ ] PDF-Layout: Kein Text abgeschnitten, alle Seiten sichtbar?
 - [ ] TikZ-Koordinatensysteme korrekt gerendert?
